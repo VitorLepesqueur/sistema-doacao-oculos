@@ -64,8 +64,3 @@ O sistema poderá ser acessado pelo navegador em:
 http://127.0.0.1:5000
 ```
 
-## Observação
-
-Os dados que aparecem inicialmente no banco são apenas exemplos utilizados para demonstrar o funcionamento do sistema.
-
-Este projeto foi desenvolvido como parte de um trabalho extensionista do curso de Análise e Desenvolvimento de Sistemas.
