@@ -167,7 +167,7 @@ def acompanhar():
     protocolo = ""
 
     if request.method == "POST":
-        protocolo = request.form.get("protocolo", "").strip().upper()
+        protocolo = request.form.get("protocolo", "").strip().lower()
 
         if not protocolo:
             flash("Informe o protocolo.", "erro")
