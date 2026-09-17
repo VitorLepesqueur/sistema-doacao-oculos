@@ -2,6 +2,7 @@ import os
 import random
 import string
 import smtplib
+import resend
 from datetime import datetime
 from email.message import EmailMessage
 from functools import wraps
@@ -51,13 +52,34 @@ def gerar_protocolo(cursor):
 
 
 def enviar_email(assunto, corpo):
-    
-    smtp_email = os.getenv("SMTP_EMAIL")
-    smtp_password = os.getenv("SMTP_APP_PASSWORD")
     destino = os.getenv("CONTACT_EMAIL", "vitorlepesqueur@gmail.com")
 
+    # No Railway será usado o Resend
+    resend_key = os.getenv("RESEND_API_KEY")
+
+    if resend_key:
+        try:
+            resend.api_key = resend_key
+
+            resend.Emails.send({
+                "from": "Projeto Doacao de Oculos <onboarding@resend.dev>",
+                "to": [destino],
+                "subject": assunto,
+                "text": corpo,
+            })
+
+            return True
+
+        except Exception as erro:
+            app.logger.exception("Falha ao enviar e-mail: %s", erro)
+            return False
+
+    # Mantém o Gmail funcionando nos testes locais
+    smtp_email = os.getenv("SMTP_EMAIL")
+    smtp_password = os.getenv("SMTP_APP_PASSWORD")
+
     if not smtp_email or not smtp_password:
-        app.logger.warning("SMTP não configurado. E-mail não enviado.")
+        app.logger.warning("E-mail não configurado.")
         return False
 
     msg = EmailMessage()
@@ -71,7 +93,9 @@ def enviar_email(assunto, corpo):
             servidor.starttls()
             servidor.login(smtp_email, smtp_password)
             servidor.send_message(msg)
+
         return True
+
     except Exception as erro:
         app.logger.exception("Falha ao enviar e-mail: %s", erro)
         return False
