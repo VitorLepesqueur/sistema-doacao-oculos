@@ -51,11 +51,7 @@ def gerar_protocolo(cursor):
 
 
 def enviar_email(assunto, corpo):
-    """
-    Envia aviso para o e-mail do responsável.
-    Se as variáveis SMTP não estiverem configuradas, apenas ignora o envio.
-    A solicitação continua sendo salva normalmente no banco.
-    """
+    
     smtp_email = os.getenv("SMTP_EMAIL")
     smtp_password = os.getenv("SMTP_APP_PASSWORD")
     destino = os.getenv("CONTACT_EMAIL", "vitorlepesqueur@gmail.com")
