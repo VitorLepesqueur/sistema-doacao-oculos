@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Login administrativo{% endblock %}
+
+{% block content %}
+<section class="secao central">
+    <div class="container">
+        <form class="card-form login-card" method="post">
+            <span class="tag">Área restrita</span>
+            <h1>Administração</h1>
+            <p>Entre para atualizar os pedidos e visualizar mensagens.</p>
+
+            <label>
+                Usuário
+                <input type="text" name="usuario" required>
+            </label>
+
+            <label>
+                Senha
+                <input type="password" name="senha" required>
+            </label>
+
+            <button class="btn largura-total" type="submit">Entrar</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+{% block title %}Visão para o Futuro{% endblock %}
+
+{% block content %}
+<section id="inicio" class="hero">
+    <div class="container hero-grid">
+        <div>
+            <span class="tag">Projeto social e acadêmico</span>
+            <h1>Um olhar melhor pode transformar a aprendizagem de uma criança.</h1>
+            <p>
+                Este sistema organiza solicitações de doação de óculos para crianças
+                e aproxima pessoas e empresas interessadas em apoiar novos atendimentos.
+            </p>
+            <div class="acoes">
+                <a class="btn" href="#solicitacao">Fazer solicitação</a>
+                <a class="btn secundario" href="{{ url_for('acompanhar') }}">Acompanhar pedido</a>
+            </div>
+        </div>
+
+        <div class="hero-card">
+            <div class="olho">◉</div>
+            <h2>Como funciona?</h2>
+            <ol>
+                <li>O responsável registra a solicitação.</li>
+                <li>O pedido recebe um protocolo.</li>
+                <li>O andamento pode ser consultado pelo protocolo.</li>
+                <li>O status é atualizado conforme o atendimento avança.</li>
+            </ol>
+        </div>
+    </div>
+</section>
+
+<section class="secao suave">
+    <div class="container">
+        <div class="titulo-secao">
+            <span>Fluxo de atendimento</span>
+            <h2>Três etapas simples</h2>
+        </div>
+        <div class="passos">
+            <article class="passo">
+                <div>1</div>
+                <h3>Pedido feito</h3>
+                <p>A solicitação foi recebida e registrada.</p>
+            </article>
+            <article class="passo">
+                <div>2</div>
+                <h3>Pedido em produção</h3>
+                <p>O atendimento avançou e os óculos estão em preparação.</p>
+            </article>
+            <article class="passo">
+                <div>3</div>
+                <h3>Pedido entregue</h3>
+                <p>O processo foi concluído e a entrega realizada.</p>
+            </article>
+        </div>
+    </div>
+</section>
+
+<section id="solicitacao" class="secao">
+    <div class="container duas-colunas">
+        <div>
+            <span class="tag">Solicitação</span>
+            <h2>Cadastre o pedido de doação</h2>
+            <p>
+                Preencha os dados do responsável e da criança beneficiada.
+                Ao concluir, o sistema mostrará o protocolo para acompanhamento.
+            </p>
+            <div class="aviso-privacidade">
+                <strong>Importante:</strong>
+                Preencha os dados corretamente, pois é necessário entrar em contato
+                para a entrega e verificação da adaptação do usuário do oculos.
+            </div>
+        </div>
+
+        <form class="card-form" action="{{ url_for('solicitar') }}" method="post">
+            <label>
+                Nome do solicitante
+                <input type="text" name="nome" maxlength="150" required>
+            </label>
+
+            <label>
+                Endereço
+                <input type="text" name="endereco" maxlength="255" required>
+            </label>
+
+            <div class="form-grid">
+                <label>
+                    Telefone
+                    <input type="tel" name="telefone" maxlength="30" placeholder="(00) 00000-0000" required>
+                </label>
+                <label>
+                    RG
+                    <input type="text" name="rg" maxlength="30" required>
+                </label>
+            </div>
+
+            <label>
+                Data de nascimento do solicitante
+                <input type="date" name="data_nascimento" required>
+            </label>
+
+            <label>
+                Nome da criança beneficiada
+                <input type="text" name="crianca" maxlength="150" required>
+            </label>
+
+            <button class="btn largura-total" type="submit">Solicitar doação</button>
+        </form>
+    </div>
+</section>
+
+<section id="parcerias" class="secao destaque">
+    <div class="container duas-colunas">
+        <div>
+            <span class="tag clara">Ajude o projeto</span>
+            <h2>Doações e parcerias ampliam o número de atendimentos.</h2>
+            <p>
+                Óticas, empresas, profissionais e pessoas interessadas podem enviar
+                uma mensagem diretamente pelo sistema. O contato será encaminhado
+                ao responsável pelo projeto.
+            </p>
+        </div>
+
+        <form class="card-form clara" action="{{ url_for('contato') }}" method="post">
+            <label>
+                Nome
+                <input type="text" name="nome_contato" maxlength="150" required>
+            </label>
+
+            <div class="form-grid">
+                <label>
+                    E-mail
+                    <input type="email" name="email_contato" maxlength="150" required>
+                </label>
+                <label>
+                    Telefone
+                    <input type="tel" name="telefone_contato" maxlength="30">
+                </label>
+            </div>
+
+            <label>
+                Motivo do contato
+                <select name="tipo_contato" required>
+                    <option value="">Selecione</option>
+                    <option>Quero fazer uma doação</option>
+                    <option>Quero propor uma parceria</option>
+                    <option>Quero saber mais sobre o projeto</option>
+                </select>
+            </label>
+
+            <label>
+                Mensagem
+                <textarea name="mensagem" rows="5" maxlength="2000" required></textarea>
+            </label>
+
+            <button class="btn largura-total" type="submit">Enviar mensagem</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

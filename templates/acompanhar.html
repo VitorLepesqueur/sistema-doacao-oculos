@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Acompanhar pedido{% endblock %}
+
+{% block content %}
+<section class="secao">
+    <div class="container acompanhamento">
+        <div class="titulo-secao">
+            <span>Acompanhamento</span>
+            <h1>Consulte o andamento do pedido</h1>
+            <p>Digite o protocolo recebido no momento da solicitação.</p>
+        </div>
+
+        <form class="busca-protocolo" method="post">
+            <input type="text" name="protocolo" value="{{ protocolo }}" placeholder="Ex.: PEDIDO1" required>
+            <button class="btn" type="submit">Consultar</button>
+        </form>
+
+        {% if pedido %}
+            <div class="resultado">
+                <div class="resultado-topo">
+                    <div>
+                        <span>Protocolo</span>
+                        <strong>{{ pedido.protocolo }}</strong>
+                    </div>
+                    <div>
+                        <span>Criança beneficiada</span>
+                        <strong>{{ pedido.nome_crianca }}</strong>
+                    </div>
+                </div>
+
+                {% set etapas = ['Pedido feito', 'Pedido em produção', 'Pedido entregue'] %}
+                {% set atual = etapas.index(pedido.status) %}
+
+                <div class="linha-status">
+                    {% for etapa in etapas %}
+                        <div class="status-item {% if loop.index0 <= atual %}ativo{% endif %}">
+                            <div class="bolinha">{{ loop.index }}</div>
+                            <strong>{{ etapa }}</strong>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <p class="status-atual">
+                    Status atual: <strong>{{ pedido.status }}</strong>
+                </p>
+            </div>
+        {% endif %}
+
+        <div class="demo-box">
+            <strong>Protocolos de demonstração</strong>
+            <p>Você pode testar com: PEDIDO1, PEDIDO2.</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

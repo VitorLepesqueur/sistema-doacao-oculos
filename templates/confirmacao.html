@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Solicitação confirmada{% endblock %}
+
+{% block content %}
+<section class="secao central">
+    <div class="container">
+        <div class="confirmacao-card">
+            <div class="check">✓</div>
+            <span class="tag">Solicitação registrada</span>
+            <h1>Agendamento confirmado!</h1>
+            <p>
+                Obrigado, <strong>{{ nome }}</strong>.
+                O pedido para <strong>{{ crianca }}</strong> foi recebido com sucesso.
+            </p>
+
+            <div class="protocolo">
+                <span>Seu protocolo de acompanhamento</span>
+                <strong id="protocolo">{{ protocolo }}</strong>
+            </div>
+
+            <p class="pequeno">
+                Guarde este código. Ele será usado para consultar o andamento do pedido.
+            </p>
+
+            <div class="acoes centro">
+                <button class="btn" type="button" data-copy="{{ protocolo }}">Copiar protocolo</button>
+                <a class="btn secundario" href="{{ url_for('acompanhar') }}">Acompanhar pedido</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

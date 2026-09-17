@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Painel administrativo{% endblock %}
+
+{% block content %}
+<section class="secao admin-page">
+    <div class="container">
+        <div class="admin-head">
+            <div>
+                <span class="tag">Área administrativa</span>
+                <h1>Painel de atendimento</h1>
+                <p>Atualize o andamento dos pedidos e consulte os contatos recebidos.</p>
+            </div>
+            <a class="btn secundario" href="{{ url_for('admin_logout') }}">Sair</a>
+        </div>
+
+        <h2>Pedidos</h2>
+        <div class="tabela-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Protocolo</th>
+                        <th>Solicitante</th>
+                        <th>Criança</th>
+                        <th>Telefone</th>
+                        <th>Data</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for pedido in pedidos %}
+                    <tr>
+                        <td><strong>{{ pedido.protocolo }}</strong></td>
+                        <td>{{ pedido.nome_solicitante }}</td>
+                        <td>{{ pedido.nome_crianca }}</td>
+                        <td>{{ pedido.telefone }}</td>
+                        <td>{{ pedido.data_pedido.strftime('%d/%m/%Y') }}</td>
+                        <td>
+                            <form class="status-form" action="{{ url_for('atualizar_status', pedido_id=pedido.id) }}" method="post">
+                                <select name="status">
+                                    {% for status in status_validos %}
+                                        <option {% if status == pedido.status %}selected{% endif %}>{{ status }}</option>
+                                    {% endfor %}
+                                </select>
+                                <button type="submit">Salvar</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <h2 class="espaco-topo">Mensagens de doação e parceria</h2>
+        {% if mensagens %}
+            <div class="mensagens-grid">
+                {% for msg in mensagens %}
+                    <article class="mensagem-card">
+                        <div class="mensagem-meta">
+                            <strong>{{ msg.nome }}</strong>
+                            <span>{{ msg.data_envio.strftime('%d/%m/%Y %H:%M') }}</span>
+                        </div>
+                        <span class="tipo">{{ msg.tipo }}</span>
+                        <p>{{ msg.mensagem }}</p>
+                        <small>
+                            {{ msg.email }}
+                            {% if msg.telefone %} • {{ msg.telefone }}{% endif %}
+                        </small>
+                    </article>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>Nenhuma mensagem recebida ainda.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
